@@ -5,8 +5,6 @@
 
 
 
-
-
 - **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
 
 ## Development
