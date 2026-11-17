@@ -1,7 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { designs, getBrand } from "@/lib/catalog";
 import { DesignCard, PageHead } from "@/components/ui-bits";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLovedBrands } from "@/lib/loved-brands";
 import { Heart } from "lucide-react";
 
@@ -49,22 +49,10 @@ function BrandPage() {
   const [category, setCategory] = useState(initialCategory);
   const [minPrice, setMinPrice] = useState(initialMinPrice);
   const [maxPrice, setMaxPrice] = useState(initialMaxPrice);
-  const [displayCount, setDisplayCount] = useState(24);
+  const [displayCount, setDisplayCount] = useState(12);
   const { hasBrand, toggleBrand } = useLovedBrands();
   const on = hasBrand(brand.slug);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.offsetHeight - 800
-      ) {
-        setDisplayCount((prev) => prev + 24);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   // Keywords that signal festive / Indianwear aesthetic
   const INDIAN_KEYWORDS = [
@@ -137,7 +125,7 @@ function BrandPage() {
       return true;
     })
     .sort((a, b) => {
-      // When arriving from Chic Diwali, float festive/Indianwear items to top
+      // When arriving from Chic Shadi, float festive/Indianwear items to top
       if (search.from === "chic-diwali-on-budget") {
         const aIndian = isIndianwear(a.name) ? 0 : 1;
         const bIndian = isIndianwear(b.name) ? 0 : 1;
@@ -145,6 +133,9 @@ function BrandPage() {
       }
       return 0;
     });
+
+  const PAGE_SIZE = 12;
+  const hasMore = displayCount < filteredDesigns.length;
 
   return (
     <main className="pb-20">
@@ -172,6 +163,7 @@ function BrandPage() {
           {CATEGORIES.map((c) => (
             <button key={c} onClick={() => {
               setCategory(c);
+              setDisplayCount(PAGE_SIZE);
               if (search.from === "tops-under-3k" && c !== "Tops" && maxPrice === "3000") {
                 setMaxPrice("");
               }
@@ -214,6 +206,24 @@ function BrandPage() {
           </div>
         )}
       </div>
+
+      {filteredDesigns.length > 0 && hasMore && (
+        <div className="mx-auto max-w-6xl px-4 mt-8 flex flex-col items-center gap-2">
+          <p className="text-sm text-ink/50 font-medium">
+            Showing {Math.min(displayCount, filteredDesigns.length)} of {filteredDesigns.length} products
+          </p>
+          <button
+            onClick={() => setDisplayCount((prev) => prev + PAGE_SIZE)}
+            className="px-8 py-3 rounded-full border-2 border-ink bg-cream text-ink font-bold text-sm uppercase tracking-widest hover:bg-ink hover:text-cream transition-colors active:scale-95"
+          >
+            Load More
+          </button>
+        </div>
+      )}
+
+      {filteredDesigns.length > 0 && !hasMore && displayCount > PAGE_SIZE && (
+        <p className="mt-8 text-center text-sm text-ink/40 font-medium">You've seen everything ✦</p>
+      )}
     </main>
   );
 }

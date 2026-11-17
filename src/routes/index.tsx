@@ -69,7 +69,7 @@ function Index() {
           <div className="relative h-64 md:h-80 w-full overflow-hidden">
             <img
               src="/diwali-banner.png"
-              alt="Chic Diwali on Budget"
+              alt="Chic Shadi on Budget"
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
             />
             {/* Gradient overlay */}
@@ -83,13 +83,13 @@ function Index() {
             {/* Text content */}
             <div className="absolute inset-0 flex flex-col justify-center px-8 md:px-12">
               <p className="text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-amber-300 mb-3">
-                ✦ Diwali Edit ✦
+                ✦ Shadi Edit ✦
               </p>
               <h2 className="font-serif italic text-white text-3xl md:text-5xl leading-tight max-w-sm md:max-w-lg">
                 Serve, don't splurge.
               </h2>
               <p className="font-display font-extrabold text-white text-xl md:text-3xl mt-1 max-w-sm md:max-w-lg leading-tight">
-                Chic Diwali outfits on Budget
+                Chic Shadi outfits on Budget
               </p>
               <div className="mt-6 inline-flex items-center gap-2 bg-amber-400 text-ink font-bold text-sm px-5 py-2.5 rounded-full border-2 border-ink w-fit shadow-[3px_3px_0px_#050505] group-hover:shadow-none group-hover:translate-x-[3px] group-hover:translate-y-[3px] transition-all duration-200">
                 Shop the edit
